@@ -6,5 +6,4 @@ router.post("/login", userControllers.login);
 router.put("/:id", userControllers.updateUser);
 router.delete("/:id", userControllers.deleteUser);
 
-
 module.exports = router;

@@ -6,22 +6,19 @@ const User = db.users;
 // CREATE PRODUCT
 const addProduct = async (req, res) => {
   let info = {
-    title: req.body.title,
-    price: req.body.price,
+    text: req.body.text,
   };
 
   const product = await Product.create(info);
   res.status(200).send(product);
-  console.log(product);
 };
 
 // GET ALL PRODUCT
 const getAllProducts = async (req, res) => {
   let products = await Product.findAll({
-    attributes: ["title", "price"],
+    attributes: ["text"],
   });
   res.status(200).send(products);
-  res.send(products);
 };
 
 // GET ONE PRODUCT
@@ -29,8 +26,7 @@ const getOneProduct = async (req, res) => {
   try {
     let id = req.params.id;
     let product = await Product.findOne({ where: { id: id } });
-    res.status(200).send(product);
-    return res.send(product);
+    await res.status(200).send(product);
   } catch (err) {
     console.error(err);
     return res.status(500).send(err);
@@ -40,8 +36,9 @@ const getOneProduct = async (req, res) => {
 // UPDATE PRODUCT
 const updateProduct = async (req, res) => {
   let id = req.params.id;
-  const product = await Product.update(req.body, { where: { id: id } });
-  res.status(200).send("Product updated successfully");
+  await Product.update(req.body, { where: { id: id } });
+  const updatedProduct = await Product.findOne({ where: { id: id } });
+  res.status(200).send(updatedProduct);
 };
 
 // DELETE PRODUCT

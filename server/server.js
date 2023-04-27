@@ -1,22 +1,17 @@
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv")
-const cookieParser = require("cookie-parser")
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
-
-dotenv.config()
+dotenv.config();
 
 const app = express();
 
-const corsOptions = {
-  origin: "https://localhost:8080",
-};
-
+app.use(cors())
 // middlewres
 
-app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // routers
